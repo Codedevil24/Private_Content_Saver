@@ -9,7 +9,6 @@ RUN pip3 install wheel
 RUN pip3 install --no-cache-dir -U -r requirements.txt
 WORKDIR /app
 COPY devgagan/ .
-CMD ["python3", "main.py"]
 EXPOSE 8000
-CMD ["python3", "main.py"]
+CMD ["python3", "__main__.py"]
 
