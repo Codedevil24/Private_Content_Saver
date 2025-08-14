@@ -19,5 +19,5 @@ RUN pip3 install --no-cache-dir -U -r requirements.txt
 # Copy the entire project
 COPY . .
 
-# Run the bot
-CMD ["python3", "devgagan/__main__.py"]
+# Run the bot as a module
+CMD ["python3", "-m", "devgagan.main"]
