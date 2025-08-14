@@ -361,12 +361,12 @@ Your credentials can be stolen if pushed to a public repository. Always keep the
 ---
 ## 🛠️ Terms of Use
 
-Visit the [Terms of Use](https://github.com/devgaganin/Save-Restricted-Content-Bot-Repo/blob/master/TERMS_OF_USE.md) page to review and accept the guidelines.
+Visit the [Terms of Use](https://github.com/Codedevil24/Private_Content_Saver/blob/main/TERMS_OF_USE.md) page to review and accept the guidelines.
 ## Important Note
 
 **Note**: Changing the terms and commands doesn't magically make you a developer. Real development involves understanding the code, writing new functionalities, and debugging issues, not just renaming things. If only it were that easy!
 
 ### Special thanks to:
-- [King of Patal](https://github.com/alreadydea) for base development of this repository.
-- [Mautrix Bridge](https://github.com/mautrix/telegram) for fast uploader connectivity bridge.
+- [Code Devil](https://github.com/Codedevil24) for base development of this repository.
+- [Code Devil😈](https://t.me/Code_devil24) for fast uploader connectivity bridge.
 
