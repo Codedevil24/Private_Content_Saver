@@ -1,39 +1,39 @@
 {
-  "name": "Save Restricted Content Bot master-v1 branch",
-  "description": "Save Restricted Content Bot by Team SPY",
-  "logo": "https://lh3.googleusercontent.com/-HPcn7AqepNg/AAAAAAAAAAI/AAAAAAAAAAA/ALKGfknb1BkQiq-8_KUVOYcNAJ4swKivDQ/photo.jpg",
+  "name": "Private_Content_Saver",
+  "description": "Save Restricted Content Bot by Code Devil",
+  "logo": "https://png.pngtree.com/png-clipart/20230930/original/pngtree-internet-of-things-programmer-3d-character-png-image_13023475.png",
   "keywords": ["python3", "telegram", "MusicBot", "telegram-bot", "pyrogram"],
-  "repository": "https://github.com/devgaganin/save_restricted-content-telegram-bot-repo",
+  "repository": "https://github.com/Codedevil24/Private_Content_Saver/tree/main",
   "success_url": "https://devgagan.in",
   "env": {
     "API_ID": {
       "description": "Get this value from https://my.telegram.org",
-      "value": "your_api_id_here",
+      "value": "23057509",
       "required": true
     },
     "API_HASH": {
       "description": "Get this value from https://my.telegram.org",
-      "value": "your_api_hash_here",
+      "value": "a1ba4eb481c7333fc8822de292e46f5e",
       "required": true
     },
     "BOT_TOKEN": {
       "description": "A Bot's token from Botfather",
-      "value": "your_bot_token_here",
+      "value": "8357607201:AAHlT9rp4k0pDHwrjqf_wif5lede60t5AUI",
       "required": true
     },
     "MONGO_DB": {
       "description": "Get a MongoDB URL from https://cloud.mongodb.com.",
-      "value": "your_mongodb_url_here",
+      "value": "mongodb+srv://devv54123:sz7hqWLr9cNzN5JG@cluster0.ahus5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
       "required": true
     },
     "OWNER_ID": {
       "description": "The user ID of the user whom you would like to add as OWNER.",
-      "value": "owner_user_id_here",
+      "value": "5083822493",
       "required": true
     },    
     "FREEMIUM_LIMIT": {
       "description": "Batch size for free users",
-      "value": "0",
+      "value": "30",
       "required": true
     },
     "PREMIUM_LIMIT": {
@@ -55,13 +55,13 @@
     
     "WEBSITE_URL": {
       "description": "Enter shortener website domain eg upshrink.com",
-      "value": "upshrink.com",
-      "required": false
+      "value": "gplink.com",
+      "required": true
     },
     "AD_API": {
       "description": "Batch size for premium users",
-      "value": "52b4a2cf4687d81e7d3f8f2b7bc2943f618e78cb",
-      "required": false
+      "value": "e1b77a06fabdc3b60c575020fc9382fd33bedc39",
+      "required": true
     },
     
     "SUDO_USERS": {
@@ -71,12 +71,12 @@
     },
     "CHANNEL_ID": {
       "description": "Enter Channel ID (-100) and make bot admin there",
-      "value": "channel_id_here",
+      "value": "-1001579030541",
       "required": true
     },
     "LOG_GROUP": {
       "description": "Enter Log Channel/Group ID (-100) and make bot admin there",
-      "value": "log_group_id_here",
+      "value": "-1002828779986",
       "required": true
     }
   },
