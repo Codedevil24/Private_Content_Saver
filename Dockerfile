@@ -8,7 +8,8 @@ COPY requirements.txt .
 RUN pip3 install wheel
 RUN pip3 install --no-cache-dir -U -r requirements.txt
 WORKDIR /app
-COPY . .
+COPY devgagan/ .
+CMD ["python3", "main.py"]
 EXPOSE 8000
+CMD ["python3", "main.py"]
 
-CMD flask run -h 0.0.0.0 -p 8000 & python3 -m devgagan
