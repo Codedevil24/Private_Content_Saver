@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '/app')
 # ---------------------------------------------------
 # File Name: __main__.py
 # Description: A Pyrogram bot for downloading files from Telegram channels or groups 
