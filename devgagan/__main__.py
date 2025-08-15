@@ -13,7 +13,7 @@
 # License: MIT License
 # ---------------------------------------------------
 
-
+from pyrogram import idle
 import asyncio
 import importlib
 import gc
@@ -24,7 +24,8 @@ from aiojobs import create_scheduler
 
 # ----------------------------Bot-Start---------------------------- #
 
-loop = asyncio.get_event_loop()
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 
 # Function to schedule expiry checks
@@ -62,5 +63,6 @@ async def devggn_boot():
 
 if __name__ == "_main_":
     loop.run_until_complete(devggn_boot())
+    idle()  # This keeps the bot running indefinitely
 
 # ------------------------------------------------------------------ #
