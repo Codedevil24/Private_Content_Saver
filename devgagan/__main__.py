@@ -60,7 +60,7 @@ async def devggn_boot():
     print("Bot stopped...")
 
 
-if _name_ == "_main_":
+if __name__ == "_main_":
     loop.run_until_complete(devggn_boot())
 
 # ------------------------------------------------------------------ #
