@@ -60,7 +60,7 @@ async def devggn_boot():
     # Keep the bot running
     await idle()  # Ensure the event loop stays alive
 
-if name == "main":
+if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(devggn_boot())  # Run the boot coroutine
