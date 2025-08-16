@@ -1,16 +1,18 @@
 FROM python:3.12-slim
 
+# Set environment variables for Python optimization
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
+# Set working directory
 WORKDIR /app
 
-# Install system dependencies (ffmpeg for yt-dlp)
+# Install system dependencies (ffmpeg for yt-dlp, build-essential for tgcrypto build)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ffmpeg && \
+    apt-get install -y --no-install-recommends ffmpeg build-essential libc-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip to latest version
+# Upgrade pip to latest version (to avoid notices)
 RUN pip install --no-cache-dir --upgrade pip
 
 # Copy requirements first for caching
