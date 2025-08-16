@@ -40,7 +40,7 @@ app = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=BOT_TOKEN,
-    workers=20,  # Reduced from 50 to avoid resource overload on Railway
+    workers=20,  # Reduced to avoid resource overload
     parse_mode=ParseMode.MARKDOWN
 )
 
