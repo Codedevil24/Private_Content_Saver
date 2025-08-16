@@ -30,7 +30,7 @@ from pyrogram.errors import ChannelBanned, ChannelInvalid, ChannelPrivate, ChatI
 from pyrogram.enums import MessageMediaType, ParseMode
 from telethon.tl.types import DocumentAttributeVideo
 from telethon import events, Button
-from devgagan import app, sex as gf
+from devgagan import app, telethon_client as gf  # Use telethon_client instead of sex
 from devgagan.core.func import *
 from devgagan.core.mongo import db as odb
 from devgagantools import fast_upload
