@@ -17,7 +17,7 @@ import time
 import os
 import nest_asyncio
 from pyrogram import Client
-from pyrogram.enums import ParseMode 
+from pyrogram.enums import ParseMode
 from telethon import TelegramClient
 from telethon.errors import FloodWaitError, AuthKeyError
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -40,7 +40,7 @@ app = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=BOT_TOKEN,
-    workers=50,
+    workers=20,  # Reduced from 50 to avoid resource overload on Railway
     parse_mode=ParseMode.MARKDOWN
 )
 
