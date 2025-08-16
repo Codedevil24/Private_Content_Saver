@@ -18,6 +18,7 @@ aiojobs
 werkzeug==2.2.2
 apscheduler 
 telethon-tgcrypto
+nest-asyncio
 mutagen
 yt-dlp
 speedtest-cli
