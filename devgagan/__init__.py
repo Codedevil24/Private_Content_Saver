@@ -53,8 +53,19 @@ if DEFAULT_SESSION:
 else:
     userrbot = None
 
-telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+import time
+from telethon.errors import FloodWaitError
 
+try:
+    telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+except FloodWaitError as e:
+    print(f"FloodWaitError: Waiting for {e.seconds} seconds...")
+    time.sleep(e.seconds + 10)  # Extra 10 seconds buffer
+    telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot_token=BOT_TOKEN)  # Retry
+except Exception as ex:
+    print(f"Error during Telethon start: {ex}")
+    raise  # Re-raise if other error
+    
 # MongoDB setup
 tclient = AsyncIOMotorClient(MONGO_DB)
 tdb = tclient["telegram_bot"]  # Your database
