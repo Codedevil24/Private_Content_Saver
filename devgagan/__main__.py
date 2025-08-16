@@ -16,7 +16,7 @@ async def schedule_expiry_check():
     scheduler = await create_scheduler()
     while True:
         await scheduler.spawn(check_and_remove_expired_users())
-        await asyncio.sleep(3600)  # Check every hour (3600 seconds)
+        await asyncio.sleep(3600)  # Check every hour
         gc.collect()
 
 async def devggn_boot():
@@ -57,5 +57,9 @@ async def devggn_boot():
     asyncio.create_task(schedule_expiry_check())
     print("Auto removal started ...")
 
-if __name__ == "__main__":  # Fixed typo from "if name == 'main'"
-    app.run()  # Runs the bot, handles start, idle, and stop properly
+    # Keep the bot running
+    await idle()  # Ensure the event loop stays alive
+
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(devggn_boot())  # Run the boot coroutine
