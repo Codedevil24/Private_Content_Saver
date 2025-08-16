@@ -1,5 +1,5 @@
 # ---------------------------------------------------
-# File Name: __init__.py
+# File Name: init.py
 # Description: A Pyrogram bot for downloading files from Telegram channels or groups 
 #              and uploading them back to Telegram.
 # Author: Code Devil
@@ -60,12 +60,14 @@ for attempt in range(max_retries):
         logging.info(f"Telethon client started successfully on attempt {attempt + 1}")
         break
     except FloodWaitError as e:
-        wait_time = min(e.seconds * (backoff_factor ** attempt), 3600)  # Cap at 1 hour
+        wait_time = min(e.seconds * (backoff_factor * attempt), 3600)  # Fixed syntax, cap at 1 hour
+        if wait_time > 3600:
+            logging.error(f"Excessive FloodWait ({wait_time} seconds). Consider refreshing BOT_TOKEN.")
         logging.warning(f"FloodWaitError: Waiting for {wait_time} seconds (attempt {attempt + 1}/{max_retries})...")
         time.sleep(wait_time)
     except AuthKeyError as e:
         logging.warning(f"AuthKeyError (nonce issue): {e}. Retrying {attempt + 1}/{max_retries}...")
-        time.sleep(5 * (backoff_factor ** attempt))
+        time.sleep(5 * (backoff_factor * attempt))
     except Exception as ex:
         logging.error(f"Error during Telethon start: {ex}")
         if attempt == max_retries - 1:
