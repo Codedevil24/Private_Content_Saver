@@ -17,7 +17,7 @@ from speedtest import Speedtest
 import math
 from telethon import events
 from devgagan import botStartTime
-from devgagan import sex as gagan
+from devgagan import telethon_client as gagan
 
 SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
