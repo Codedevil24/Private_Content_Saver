@@ -60,9 +60,9 @@ for attempt in range(max_retries):
         logging.info(f"Telethon client started successfully on attempt {attempt + 1}")
         break
     except FloodWaitError as e:
-        wait_time = min(e.seconds * (backoff_factor * attempt), 3600)  # Fixed syntax, cap at 1 hour
-        if wait_time > 3600:
-            logging.error(f"Excessive FloodWait ({wait_time} seconds). Consider refreshing BOT_TOKEN.")
+        wait_time = min(e.seconds * (backoff_factor * attempt), 3600)  # Cap at 1 hour
+        if wait_time >= 3600:
+            logging.error(f"Excessive FloodWait ({wait_time} seconds). Please refresh BOT_TOKEN and redeploy.")
         logging.warning(f"FloodWaitError: Waiting for {wait_time} seconds (attempt {attempt + 1}/{max_retries})...")
         time.sleep(wait_time)
     except AuthKeyError as e:
