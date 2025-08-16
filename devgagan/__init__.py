@@ -15,15 +15,19 @@
 import asyncio
 import logging
 import time
+import os
+import nest_asyncio
 from pyrogram import Client
 from pyrogram.enums import ParseMode 
-from config import API_ID, API_HASH, BOT_TOKEN, STRING, MONGO_DB, DEFAULT_SESSION
-from telethon.sync import TelegramClient
+from telethon import TelegramClient
+from telethon.errors import FloodWaitError, AuthKeyError
 from motor.motor_asyncio import AsyncIOMotorClient
+from config import API_ID, API_HASH, BOT_TOKEN, STRING, MONGO_DB, DEFAULT_SESSION
 
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
+# Enable nested event loops to prevent "Event loop is closed" errors
+nest_asyncio.apply()
 
+# Set up logging
 logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s",
     level=logging.INFO,
@@ -31,6 +35,7 @@ logging.basicConfig(
 
 botStartTime = time.time()
 
+# Initialize Pyrogram clients
 app = Client(
     "pyrobot",
     api_id=API_ID,
@@ -40,47 +45,46 @@ app = Client(
     parse_mode=ParseMode.MARKDOWN
 )
 
-sex = TelegramClient('sexrepo', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+pro = Client("ggbot", api_id=API_ID, api_hash=API_HASH, session_string=STRING) if STRING else None
+userrbot = Client("userrbot", api_id=API_ID, api_hash=API_HASH, session_string=DEFAULT_SESSION) if DEFAULT_SESSION else None
 
-if STRING:
-    pro = Client("ggbot", api_id=API_ID, api_hash=API_HASH, session_string=STRING)
-else:
-    pro = None
+# Initialize Telethon client with retry logic
+session_file = "telethon_session.session"
+if os.path.exists(session_file):
+    os.remove(session_file)  # Reset session to avoid nonce errors
 
+for attempt in range(3):  # Retry up to 3 times
+    try:
+        telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+        break  # Success, exit loop
+    except FloodWaitError as e:
+        logging.info(f"FloodWaitError: Waiting for {e.seconds} seconds...")
+        time.sleep(e.seconds + 10)
+    except AuthKeyError as e:
+        logging.info(f"AuthKeyError (nonce issue): {e}. Retrying {attempt + 1}/3...")
+        time.sleep(5)
+    except Exception as ex:
+        logging.error(f"Error during Telethon start: {ex}")
+        if attempt == 2:
+            raise  # Raise on last attempt
+        time.sleep(5)
 
-if DEFAULT_SESSION:
-    userrbot = Client("userrbot", api_id=API_ID, api_hash=API_HASH, session_string=DEFAULT_SESSION)
-else:
-    userrbot = None
-
-import time
-from telethon.errors import FloodWaitError
-
-try:
-    telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
-except FloodWaitError as e:
-    print(f"FloodWaitError: Waiting for {e.seconds} seconds...")
-    time.sleep(e.seconds + 10)  # Extra 10 seconds buffer
-    telethon_client = TelegramClient('telethon_session', API_ID, API_HASH).start(bot_token=BOT_TOKEN)  # Retry
-except Exception as ex:
-    print(f"Error during Telethon start: {ex}")
-    raise  # Re-raise if other error
-    
 # MongoDB setup
 tclient = AsyncIOMotorClient(MONGO_DB)
 tdb = tclient["telegram_bot"]  # Your database
 token = tdb["tokens"]  # Your tokens collection
 
 async def create_ttl_index():
-    """Ensure the TTL index exists for the `tokens` collection."""
+    """Ensure the TTL index exists for the tokens collection."""
     await token.create_index("expires_at", expireAfterSeconds=0)
 
-# Run the TTL index creation when the bot starts
 async def setup_database():
+    """Set up MongoDB TTL index."""
     await create_ttl_index()
-    print("MongoDB TTL index created.")
+    logging.info("MongoDB TTL index created.")
 
 async def restrict_bot():
+    """Initialize bot and clients."""
     global BOT_ID, BOT_NAME, BOT_USERNAME
     await setup_database()
     await app.start()
@@ -93,5 +97,3 @@ async def restrict_bot():
         await pro.start()
     if userrbot:
         await userrbot.start()
-
-loop.run_until_complete(restrict_bot())
