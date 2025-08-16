@@ -1,5 +1,5 @@
 import nest_asyncio
-from pyrogram import Client
+from pyrogram import Client, idle
 import asyncio
 import importlib
 import gc
@@ -60,6 +60,14 @@ async def devggn_boot():
     # Keep the bot running
     await idle()  # Ensure the event loop stays alive
 
-if __name__ == "__main__":
+if name == "main":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(devggn_boot())  # Run the boot coroutine
+    try:
+        loop.run_until_complete(devggn_boot())  # Run the boot coroutine
+    except KeyboardInterrupt:
+        logging.info("Shutting down bot...")
+        loop.run_until_complete(app.stop())
+        if pro:
+            loop.run_until_complete(pro.stop())
+        if userrbot:
+            loop.run_until_complete(userrbot.stop())
