@@ -1,33 +1,35 @@
 FROM python:3.12-slim
 
-# Set environment variables for Python optimization
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies (ffmpeg for yt-dlp, build-essential for tgcrypto build)
+# system deps
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ffmpeg build-essential libc-dev && \
+    apt-get install -y --no-install-recommends \
+        ffmpeg build-essential libc-dev git && \
     rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip to latest version (to avoid notices)
+# upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
-# Copy requirements first for caching
+# python deps layer cache
 COPY requirements.txt .
-
-# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# copy source
 COPY . .
 
-# Create a non-root user for security
+# (optional) rename ytdl.txt → ytdl.py if cookies enabled
+RUN if [ -f devgagan/modules/ytdl.txt ]; then \
+        mv devgagan/modules/ytdl.txt devgagan/modules/ytdl.py; \
+    fi
+
+# non-root user
 RUN useradd -m -s /bin/bash appuser && \
     chown -R appuser:appuser /app
 USER appuser
 
-# Run the bot
-CMD ["python3", "app.py"]
+# run the actual package (repo ka main module)
+CMD ["python3", "-m", "devgagan"]
