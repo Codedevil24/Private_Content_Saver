@@ -8,6 +8,24 @@ from devgagan.core.mongo.plans_db import check_and_remove_expired_users
 from aiojobs import create_scheduler
 from devgagan import app, pro, userrbot, setup_database, telethon_client, BOT_ID, BOT_USERNAME, BOT_NAME
 
+# Awake render container
+from flask import Flask
+import threading, os
+
+app = Flask(__name__)
+
+@app.route('/')
+def ok():
+    return 'OK', 200
+
+def keep_alive():
+    port = int(os.getenv("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+# Daemon thread start – blocks nahi karega
+threading.Thread(target=keep_alive, daemon=True).start()
+#ending
+
 # Enable nested event loops
 nest_asyncio.apply()
 
